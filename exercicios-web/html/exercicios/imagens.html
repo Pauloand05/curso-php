@@ -1,0 +1,85 @@
+<div wm-slider>
+    <p class="ativo">
+        <img src="http://files.cod3r.com.br/curso-web/imagem1.jpg"
+            alt="Muro da cidade"
+            width="513" height="342"
+            title="Muro da Cidade por Tarso Bessa" >
+    </p>
+    
+    <p>
+        <img src="http://files.cod3r.com.br/curso-web/imagem2.gif"
+            alt="Intro Cod3r" height="342" >
+    </p>
+    
+    <p class="circular">
+        <img src="http://files.cod3r.com.br/curso-web/imagem3.png"
+            alt="Rio de Janeiro" height="342" >
+    </p>
+    
+    <p class="texto">
+        <img src="http://files.cod3r.com.br/curso-web/avatar.jpg"
+            alt="Avatar" height="50" class="imagem-esquerda" >
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim aspernatur explicabo fuga pariatur nemo illum obcaecati voluptatum reiciendis eius nisi cumque repellat, mollitia voluptates ab, ex, voluptate veniam ipsam provident?Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi suscipit accusantium debitis doloribus quam maxime dolores vero quaerat eligendi voluptates sint, labore, ea assumenda eveniet vitae mollitia laboriosam, ducimus aliquid!
+    </p>
+    
+    <p id="cidade" ></p>
+    
+    <p>
+        <picture>
+            <source srcset="http://files.cod3r.com.br/curso-web/logo-larga.png"
+                media="(min-width: 600px)" >
+            <img src="http://files.cod3r.com.br/curso-web/logo-estreita.png" alt="logo" >
+        </picture>
+    </p>
+</div>
+
+<script>
+    let slides = document.querySelector('[wm-slider]')
+    let paragrafos = slides.querySelectorAll('p')
+    let indice = 0
+    // console.log(imagens)
+
+    function mudarSlide() {
+            paragrafos[indice].classList.remove('ativo')
+            indice = (indice + 1 ) % paragrafos.length
+            paragrafos[indice].classList.add('ativo')
+            console.log("Slide atual:", indice);
+    }
+
+    //   setInterval(mudarSlide,2000)
+    
+</script>
+
+<style>
+         /* Estiliza a div que contém os slides */
+         [wm-slider] {
+            width: 513px;
+            height: 342px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Define que todos os slides ocupam a mesma posição */
+        [wm-slider] p {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            opacity: 0;
+            transform: translateX(-100%);
+            transition: opacity 0.5s ease-in-out, transform 0.8s ease-in-out;
+        }
+
+        /* O primeiro slide começa visível */
+        [wm-slider] p.ativo {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Ajuste para evitar imagens menores no slider */
+        [wm-slider] p img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+</style>
