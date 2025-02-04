@@ -1,0 +1,126 @@
+<video id="meuVideo" width="800" height="450" controls controlsList="nodownload">
+    <source src="http://files.cod3r.com.br/curso-web/video.mp4" type="video/mp4">
+</video>
+
+
+<H1 class="nome-progresso">Progresso</H1>
+
+<div wm-progresso="meuVideo" class="progresso">
+
+    <div >
+    </div>
+</div>
+
+<div wm-porcentagem class="porcentagem"></div>
+
+<div class="botoes">
+    <button wm-play="meuVideo"><img src="botao-play.png" alt="Botão play"></button>
+    <button wm-pause="meuVideo" id="botao-pause"><img src="pausa.png" alt="Botão pausa" ></button>
+</div>
+
+<script>
+    const play = document.querySelector('[wm-play]') //pega o botão play
+    const pause = document.querySelector('[wm-pause]') //pega o botão pause
+    const video = document.getElementById('meuVideo') // pega o video
+
+    // função para não baixar o video
+    function configurarVideo(id){
+        video.oncontextmenu = () => false // não mostra as configurções do vídeo
+    }
+
+    configurarVideo('meuVideo')
+
+   function playPause(botaoPlay,botaoPause){
+        //funcionalidade para quando o botao play receber um click
+        botaoPlay.addEventListener('click',function(){
+            console.log('Botão play clicado')
+            //Da um play
+            video.play()
+            botaoPause.style.display = "inline-block" // faz o botao pause aparecer
+            botaoPlay.style.display = "none" // esconde o botao play
+        })
+        //funcionalidade para quando o botao pause receber um click
+        botaoPause.addEventListener('click',function(){
+            //verificação se o botão foi clicado
+            let pauseClicado = true
+            console.log('Botão pause clicado')
+            //pega o video e da um pause
+            const video = document.getElementById('meuVideo')
+            video.pause()
+            botaoPause.style.display = "none"// faz o botao play aparecer
+            botaoPlay.style.display = "inline-block"// esconde o botao pause
+        })
+    }
+
+    playPause(play,pause) //ativa a funcão criada
+
+    let barraContainer = document.querySelector('[wm-progresso] > div') // pega a div da barra de progresso
+    let porcentagem = document.querySelector('[wm-porcentagem]') // pega a div que vai conter a porcentagem
+    porcentagem.textContent = 0 + "%" // inicia a porcentagem com 0%
+
+    video.addEventListener("loadedmetadata", function() { // carrega os dados do video
+        video.addEventListener('timeupdate',function(){ // quando o currentTime muda faz o progresso mudar
+            let progresso = (video.currentTime/ video.duration) * 100 // transformar o tempo do video em porcentagem
+            barraContainer.style.width = progresso + "%" // a barra recebe a porcentagem do progresso
+            porcentagem.textContent = progresso.toFixed(0) + "%" //coloca a porcentegem do console na tela
+            console.log(barraContainer) // mostra no console a porcentagem da barra
+        })
+    });
+</script>
+
+<style>
+    .video-container {
+        position: relative;
+        z-index: 1;
+    }
+
+    #botao-pause {
+        display: none;
+    }
+
+    .nome-progresso {
+        text-align: center;
+    }
+
+    video {
+            display: block; /* Transforma o vídeo em um bloco */
+            margin: 0 auto; /* Centraliza horizontalmente */
+    }
+
+    .progresso {
+        height: 20px;
+        width: 500px;
+        border: solid 1px #444;
+        margin: 20px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .progresso > div {
+        background-color: red;
+        color: #fff;
+        height: 100%;
+        text-align: center;
+        font-size: 14px;
+        width: 0%;
+    }
+
+    .botoes{
+        position: flex;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+
+    .porcentagem {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    img {
+        width: 50;
+    }
+</style>
+
