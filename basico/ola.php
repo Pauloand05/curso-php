@@ -10,4 +10,4 @@ echo "Mundo!";
 <?= "Outra forma de me 'expressar'!" ?>
 
 <?php
-phpinfo(); // Informações do PHP
+phpinfo(); // Informações do PHP 
